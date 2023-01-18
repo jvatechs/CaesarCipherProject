@@ -1,7 +1,11 @@
 package encrypt_decrypt_basic;
 
-class Common {
+public class Common {
     protected static final String alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,\":-!? ";
+
+    public static String getAlphabet() {
+        return alphabet;
+    }
 
     protected static String createNewAlphabet (int key) {
         return alphabet.substring(key) + alphabet.substring(0, key);
@@ -26,19 +30,18 @@ class Common {
         checkUpperCaseAndAppend(current, sb, newLetter);
     }
 
+    protected static StringBuilder checkKeyAndCreateSBuilder(int anyKey) throws StringIndexOutOfBoundsException {
+        if (anyKey >= alphabet.length() || anyKey == 0) {
+            throw new StringIndexOutOfBoundsException("Введите действительный ключ от 0 до " + alphabet.length() + " (НЕВКЛЮЧИТЕЛЬНО) !");
+        } else {
+            return new StringBuilder();
+        }
+    }
     private static void checkUpperCaseAndAppend(char current, StringBuilder sb, char letter) {
         if (!isUpperCased(current)) {
             sb.append(Character.toLowerCase(letter));
         } else {
             sb.append(letter);
-        }
-    }
-
-    protected static StringBuilder checkKeyAndCreateSBuilder(int anyKey) throws StringIndexOutOfBoundsException {
-        if (anyKey >= alphabet.length()) {
-            throw new StringIndexOutOfBoundsException("Введите действительный ключ от 0 до " + alphabet.length() + " (НЕВКЛЮЧИТЕЛЬНО) !");
-        } else {
-            return new StringBuilder();
         }
     }
 
