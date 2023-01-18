@@ -1,4 +1,4 @@
-package encrypt_decrypt;
+package encrypt_decrypt_basic;
 
 class Common {
     protected static final String alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,\":-!? ";

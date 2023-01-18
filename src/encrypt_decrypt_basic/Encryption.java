@@ -1,4 +1,4 @@
-package encrypt_decrypt;
+package encrypt_decrypt_basic;
 
 public class Encryption extends Common{
 
