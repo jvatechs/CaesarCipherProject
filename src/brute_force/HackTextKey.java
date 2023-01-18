@@ -8,12 +8,8 @@ import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HackTextKey extends HelpReading {
+class HackTextKey extends HelpReading {
     public static String encrypted;
-    public static void main(String[] args) {
-        int key = BruteForce(Path.of("src/encrypted_with_key_6.txt"));
-        System.out.println("The key is :" + key);
-    }
 
     public static int BruteForce(Path path) {
         int countOfKeys = Common.getAlphabet().length() - 1;
