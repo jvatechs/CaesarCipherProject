@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HackTextKey extends HelpReading {
+    public static String encrypted;
     public static void main(String[] args) {
         int key = BruteForce(Path.of("src/encrypted_with_key_6.txt"));
         System.out.println("The key is :" + key);
@@ -16,12 +17,12 @@ public class HackTextKey extends HelpReading {
 
     public static int BruteForce(Path path) {
         int countOfKeys = Common.getAlphabet().length() - 1;
-        String encrypted = helpRead(path);
+        encrypted = helpRead(path);
         int countOfSpaces = 0;
         int key = 0;
 
         for (int i = 1; i < countOfKeys; i++) {
-            int currentSpaces = findSymbolOccurrences(encrypted, " ", i);
+            int currentSpaces = findSpaceOccurrences(i);
             if (currentSpaces > countOfSpaces) {
                 countOfSpaces = currentSpaces;
                 key = i;
@@ -30,18 +31,18 @@ public class HackTextKey extends HelpReading {
         return key;
     }
 
-    private static int findSymbolOccurrences(String encrypted, String symbol, int key) {
-        Pattern pattern = Pattern.compile(symbol);
-        Matcher matcher = pattern.matcher(getDecrypted(encrypted, key));
-        return findMatches(matcher, 0);
+    private static int findSpaceOccurrences(int key) {
+        Pattern pattern = Pattern.compile(" ");
+        Matcher matcher = pattern.matcher(getDecrypted(key));
+        return findMatches(matcher);
     }
 
-    private static String getDecrypted(String encrypted, int key) {
+    private static String getDecrypted(int key) {
         return Decryption.decrypt(encrypted, key);
     }
 
-    private static int findMatches(Matcher matcher, int startCount) {
-        int currentSpaces = startCount;
+    private static int findMatches(Matcher matcher) {
+        int currentSpaces = 0;
         while (matcher.find()) {
             currentSpaces++;
         }
