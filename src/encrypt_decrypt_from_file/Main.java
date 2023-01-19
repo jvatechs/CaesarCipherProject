@@ -9,18 +9,19 @@ import java.nio.file.Path;
 
 public class Main extends HelpReading {
     public static void main(String[] args) {
-        readFileAndEncrypt(Path.of("src/Moriarty_letter_to_Sherlock.txt"), 0);
-        System.out.println("*".repeat(15));
-
-        readFileAndDecrypt(Path.of("src/encrypted_with_key_6.txt"), 6);
+//        readFileAndEncrypt(Path.of("Moriarty_letter_to_Sherlock.txt"), 6);
+//        System.out.println("*".repeat(15));
+//
+//        readFileAndDecrypt(Path.of("encrypted_with_key_6.txt"), 6);
     }
 
-    public static void readFileAndEncrypt(Path path, int key) {
-        System.out.println(Encryption.encrypt(helpRead(path), key));
+    public static String readFileAndEncrypt(Path path, int key) {
+//        System.out.println(Encryption.encrypt(helpRead(path), key));
+        return Encryption.encrypt(helpRead(path), key);
     }
 
-    public static void readFileAndDecrypt(Path path, int key) {
-
-        System.out.println(Decryption.decrypt(helpRead(path), key));
+    public static String readFileAndDecrypt(Path path, int key) {
+//        System.out.println(Decryption.decrypt(helpRead(path), key));
+        return Decryption.decrypt(helpRead(path), key);
     }
 }
