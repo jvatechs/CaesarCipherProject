@@ -1,4 +1,4 @@
-package gui_create;
+package my_GIU;
 
 import encrypt_decrypt_from_file.Main;
 
@@ -11,7 +11,6 @@ import java.io.File;
 import java.nio.file.Path;
 
 import static brute_force.BruteForcedText.getBruteForcedText;
-import static encrypt_decrypt_basic.Common.getAlphabet;
 
 class Gui {
 
