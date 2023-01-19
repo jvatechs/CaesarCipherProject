@@ -14,7 +14,6 @@ import static brute_force.BruteForcedText.getBruteForcedText;
 class Gui {
 
     private static Path path;
-//    private static int countAction;
     public static void main(String[] args) {
         JTextField filename = new JTextField(), dir = new JTextField();
 
@@ -51,18 +50,6 @@ class Gui {
         jFrameText.add(headPanel);
         jFrameText.add(scrolledPane);
 
-//        //создание меню бара
-//        JMenuBar menuBar = new JMenuBar();
-//
-//        JMenu fileMenu = new JMenu("FILE");
-//        menuBar.add(fileMenu);
-//
-//        JMenuItem openFile = new JMenuItem("Open");
-//        fileMenu.add(openFile);
-
-
-
-
 
         JButton encrypt = new JButton("Encrypt with key");
 
@@ -70,19 +57,12 @@ class Gui {
 
         JButton bruteForce = new JButton("BruteForce");
 
-//        JLabel resetAlert = new JLabel("PLEASE RESET BEFORE ADDING NEW FILE");
-
-
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         panel.add(encrypt);
         panel.add(decrypt);
         panel.add(bruteForce);
-
-//        panel.add(resetAlert, SwingConstants.VERTICAL);
-//        frame.add(resetAlert, SwingConstants.CENTER);
-//        Dimension lableSize = resetAlert.getPreferredSize();
 
 
         JPanel southPanel = new JPanel();
@@ -102,21 +82,6 @@ class Gui {
 
 
         JFileChooser fileChooser = new JFileChooser();
-//        openFile.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-////                JFileChooser fileChooser = new JFileChooser();
-//                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-//                int result = fileChooser.showOpenDialog(openFile);
-//                if (result == JFileChooser.APPROVE_OPTION) {
-//                    File selectedFile = fileChooser.getSelectedFile();
-//                    path = selectedFile.toPath();
-////                    panel.setVisible(true);
-////                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-//                }
-//            }
-//        });
-
 
 
         textField.addKeyListener(new KeyAdapter() {
@@ -137,17 +102,10 @@ class Gui {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     path = selectedFile.toPath();
-//                    panel.setVisible(true);
-//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 }
-
-
                 southPanel.setVisible(true);
                 encrypt.setSelected(true);
                 decrypt.setSelected(false);
-
-//                centerPanel.setVisible(true);
-
             }
         });
 
@@ -159,16 +117,11 @@ class Gui {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     path = selectedFile.toPath();
-//                    panel.setVisible(true);
-//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 }
-
 
                 southPanel.setVisible(true);
                 encrypt.setSelected(false);
                 decrypt.setSelected(true);
-
-//                centerPanel.setVisible(true);
 
             }
         });
@@ -181,24 +134,12 @@ class Gui {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     path = selectedFile.toPath();
-//                    panel.setVisible(true);
-//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 }
-
 
                 southPanel.setVisible(false);
 
-//                label.setVisible(false);
-//                ok.setVisible(false);
-//                reset.setVisible(true);
-//                textField.setVisible(false);
-
                 textField.setText("");
 
-//                centerPanel.setVisible(true);
-//                if (countAction > 0) {
-//                    JOptionPane.showMessageDialog(frame.getComponent(0), "PLEASE OPEN NEW FILE BEFORE BRUTEFORCE!!!");
-//                }
 
                 String text = getBruteForcedText(path);
 
@@ -243,12 +184,6 @@ class Gui {
                     throw new RuntimeException(e);
                 }
 
-//                textPane.setText(text);
-//                JOptionPane.showMessageDialog(frame.getComponent(0), "Hello World");
-
-//                countAction++;
-
-
                 reset.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -265,37 +200,14 @@ class Gui {
             }
         });
 
-//        encrypt.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                textField.setVisible(true);
-//            }
-//        });
-
-//        JLabel label = new JLabel("Enter Text");
-//        JTextField tf = new JTextField(10); // accepts upto 10 characters
-//        JButton send = new JButton("Send");
-//        JButton reset = new JButton("Reset");
-//        panel.add(label); // Components Added using Flow Layout
-//        panel.add(tf);
-//        panel.add(send);
-//        panel.add(reset);
-
-        // Text Area at the Center
-//        JTextArea ta = new JTextArea();
 
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.getContentPane().add(BorderLayout.SOUTH, southPanel);
-//        frame.getContentPane().add(BorderLayout.NORTH, menuBar);
-//        frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
 
         jFrameText.getContentPane().add(BorderLayout.NORTH, headPanel);
-//        jFrameText.getContentPane().add(BorderLayout.CENTER, textPanel);
-
 
         frame.setVisible(true);
-//        textField.setVisible(true);
     }
 
 }

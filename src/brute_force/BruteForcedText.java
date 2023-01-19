@@ -1,12 +1,7 @@
 package brute_force;
 
-import encrypt_decrypt_basic.Decryption;
-
 import java.nio.file.Path;
-
 import static encrypt_decrypt_from_file.Main.readFileAndDecrypt;
-
-//import static brute_force.HackTextKey.encrypted;
 
 public class BruteForcedText {
     public static void main(String[] args) {
