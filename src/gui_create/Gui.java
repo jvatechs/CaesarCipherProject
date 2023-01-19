@@ -169,7 +169,14 @@ class Gui {
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                ((AbstractButton) event.getSource()).setEnabled(false);
+                ((AbstractButton) event.getSource()).setEnabled(false); //feature for blocking OKAY
+
+                try {
+                    doc.remove(0, doc.getLength());
+                } catch (BadLocationException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 int key = 0;
                 if (textField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(frame.getComponent(0), "Please enter key!");
@@ -197,12 +204,7 @@ class Gui {
                 reset.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        ((AbstractButton) event.getSource()).setEnabled(true);
-                        try {
-                            doc.remove(0, doc.getLength());
-                        } catch (BadLocationException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        ((AbstractButton) event.getSource()).setEnabled(true); // feature for unblocking OKAY button
 
                         textField.setText("");
                     }
