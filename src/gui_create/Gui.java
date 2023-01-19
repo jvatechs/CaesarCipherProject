@@ -11,6 +11,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 import static brute_force.BruteForcedText.getBruteForcedText;
+import static encrypt_decrypt_basic.Common.getAlphabet;
 
 class Gui {
 
@@ -180,21 +181,36 @@ class Gui {
                 int key = 0;
                 if (textField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(frame.getComponent(0), "Please enter key!");
-                } else {
+                }
+                else {
                     key = Integer.parseInt(textField.getText());
+//                    try {
+//
+//                    } catch (StringIndexOutOfBoundsException e) {
+//                        JOptionPane.showMessageDialog(frame.getComponent(0), "Введите действительный ключ от 0 до 41 (НЕВКЛЮЧИТЕЛЬНО) !");
+//                        textField.setText("");
+//                    }
                 }
 
 
-                String text = "None";
+                String text = null;
                 if (encrypt.isSelected()) {
-                    text = Main.readFileAndEncrypt(path, key);
+
+                    try {
+                        text = Main.readFileAndEncrypt(path, key);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        JOptionPane.showMessageDialog(frame.getComponent(0), "Введите действительный ключ от 0 до 41 (НЕВКЛЮЧИТЕЛЬНО) !");
+                        textField.setText("");
+                    }
                 }
                 if (decrypt.isSelected()) {
                     text = Main.readFileAndDecrypt(path, key);
                 }
 
 
-                jFrameText.setVisible(true);
+                if (text != null) {
+                    jFrameText.setVisible(true);
+                }
                 try {
                     doc.insertString(doc.getLength(), text, normal);
                 } catch (BadLocationException e) {
