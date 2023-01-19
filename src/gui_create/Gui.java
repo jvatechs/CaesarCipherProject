@@ -3,6 +3,7 @@ package gui_create;
 import encrypt_decrypt_from_file.Main;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -82,7 +83,8 @@ class Gui {
 
 
         JFileChooser fileChooser = new JFileChooser();
-
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Only text files", "txt", "text");
+        fileChooser.setFileFilter(filter);
 
         textField.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
