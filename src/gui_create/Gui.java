@@ -14,7 +14,7 @@ import static brute_force.BruteForcedText.getBruteForcedText;
 class Gui {
 
     private static Path path;
-    private static int countAction;
+//    private static int countAction;
     public static void main(String[] args) {
         JTextField filename = new JTextField(), dir = new JTextField();
 
@@ -51,14 +51,14 @@ class Gui {
         jFrameText.add(headPanel);
         jFrameText.add(scrolledPane);
 
-        //создание меню бара
-        JMenuBar menuBar = new JMenuBar();
-
-        JMenu fileMenu = new JMenu("FILE");
-        menuBar.add(fileMenu);
-
-        JMenuItem openFile = new JMenuItem("Open");
-        fileMenu.add(openFile);
+//        //создание меню бара
+//        JMenuBar menuBar = new JMenuBar();
+//
+//        JMenu fileMenu = new JMenu("FILE");
+//        menuBar.add(fileMenu);
+//
+//        JMenuItem openFile = new JMenuItem("Open");
+//        fileMenu.add(openFile);
 
 
 
@@ -98,24 +98,24 @@ class Gui {
 
 
         southPanel.setVisible(false);
-        panel.setVisible(false);
+        panel.setVisible(true);
 
 
         JFileChooser fileChooser = new JFileChooser();
-        openFile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int result = fileChooser.showOpenDialog(openFile);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    path = selectedFile.toPath();
-                    panel.setVisible(true);
-//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                }
-            }
-        });
+//        openFile.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                JFileChooser fileChooser = new JFileChooser();
+//                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+//                int result = fileChooser.showOpenDialog(openFile);
+//                if (result == JFileChooser.APPROVE_OPTION) {
+//                    File selectedFile = fileChooser.getSelectedFile();
+//                    path = selectedFile.toPath();
+////                    panel.setVisible(true);
+////                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+//                }
+//            }
+//        });
 
 
 
@@ -132,6 +132,16 @@ class Gui {
         encrypt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int result = fileChooser.showOpenDialog(encrypt);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    path = selectedFile.toPath();
+//                    panel.setVisible(true);
+//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                }
+
+
                 southPanel.setVisible(true);
                 encrypt.setSelected(true);
                 decrypt.setSelected(false);
@@ -144,6 +154,16 @@ class Gui {
         decrypt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int result = fileChooser.showOpenDialog(decrypt);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    path = selectedFile.toPath();
+//                    panel.setVisible(true);
+//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                }
+
+
                 southPanel.setVisible(true);
                 encrypt.setSelected(false);
                 decrypt.setSelected(true);
@@ -156,6 +176,15 @@ class Gui {
         bruteForce.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int result = fileChooser.showOpenDialog(bruteForce);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    path = selectedFile.toPath();
+//                    panel.setVisible(true);
+//                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                }
+
 
                 southPanel.setVisible(false);
 
@@ -167,9 +196,9 @@ class Gui {
                 textField.setText("");
 
 //                centerPanel.setVisible(true);
-                if (countAction > 0) {
-                    JOptionPane.showMessageDialog(frame.getComponent(0), "PLEASE OPEN NEW FILE BEFORE BRUTEFORCE!!!");
-                }
+//                if (countAction > 0) {
+//                    JOptionPane.showMessageDialog(frame.getComponent(0), "PLEASE OPEN NEW FILE BEFORE BRUTEFORCE!!!");
+//                }
 
                 String text = getBruteForcedText(path);
 
@@ -203,7 +232,7 @@ class Gui {
                     text = Main.readFileAndEncrypt(path, key);
                 }
                 if (decrypt.isSelected()) {
-                    text = "decrypt";
+                    text = Main.readFileAndDecrypt(path, key);
                 }
 
 
@@ -217,7 +246,7 @@ class Gui {
 //                textPane.setText(text);
 //                JOptionPane.showMessageDialog(frame.getComponent(0), "Hello World");
 
-                countAction++;
+//                countAction++;
 
 
                 reset.addMouseListener(new MouseAdapter() {
@@ -258,7 +287,7 @@ class Gui {
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.getContentPane().add(BorderLayout.SOUTH, southPanel);
-        frame.getContentPane().add(BorderLayout.NORTH, menuBar);
+//        frame.getContentPane().add(BorderLayout.NORTH, menuBar);
 //        frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
 
         jFrameText.getContentPane().add(BorderLayout.NORTH, headPanel);
