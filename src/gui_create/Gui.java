@@ -131,6 +131,12 @@ class Gui {
         bruteForce.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    doc.remove(0, doc.getLength());
+                } catch (BadLocationException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
                 int result = fileChooser.showOpenDialog(bruteForce);
                 if (result == JFileChooser.APPROVE_OPTION) {
@@ -151,6 +157,8 @@ class Gui {
                 } catch (BadLocationException evt) {
                     throw new RuntimeException(evt);
                 }
+
+
 
                 encrypt.setSelected(false);
                 decrypt.setSelected(false);
