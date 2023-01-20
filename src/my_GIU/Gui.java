@@ -1,20 +1,23 @@
 package my_GIU;
 
-import encrypt_decrypt_from_file.Main;
+import my_GIU.listeners.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.nio.file.Path;
 
-import static brute_force.BruteForcedText.getBruteForcedText;
 
 class Gui {
 
-    private static Path path;
+    private static Path filePath;
+    JFileChooser fileChooser = new JFileChooser();
+
     public static void main(String[] args) {
         JTextField filename = new JTextField(), dir = new JTextField();
 
@@ -27,7 +30,7 @@ class Gui {
 
         //создание дополнительного фрейма
         JFrame jFrameText = new JFrame("Get result");
-        Dimension size = Toolkit. getDefaultToolkit(). getScreenSize();
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         jFrameText.setSize(size.width / 2, size.height / 2);
         jFrameText.setLayout(new BorderLayout());
         jFrameText.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,7 +39,6 @@ class Gui {
         JPanel headPanel = new JPanel();
         JLabel textLabel = new JLabel("Your decrypted/encrypted text here");
 
-//        JPanel textPanel = new JPanel();
         JTextPane textPane = new JTextPane();
         textPane.setEditable(false);
         JScrollPane scrolledPane = new JScrollPane(textPane);
@@ -89,143 +91,33 @@ class Gui {
         textField.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
                     e.consume();  // игнор, если не номер
                 }
             }
         });
 
 
-        encrypt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int result = fileChooser.showOpenDialog(encrypt);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    path = selectedFile.toPath();
-                }
-                southPanel.setVisible(true);
-                encrypt.setSelected(true);
-                decrypt.setSelected(false);
-            }
-        });
+        EncryptDecryptListener encryptListener = new EncryptDecryptListener(encrypt, decrypt, southPanel);
+        encrypt.addActionListener(encryptListener);
 
-        decrypt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int result = fileChooser.showOpenDialog(decrypt);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    path = selectedFile.toPath();
-                }
+        EncryptDecryptListener decryptListener = new EncryptDecryptListener(decrypt, encrypt, southPanel);
+        decrypt.addActionListener(decryptListener);
 
-                southPanel.setVisible(true);
-                encrypt.setSelected(false);
-                decrypt.setSelected(true);
+        BruteForceListener bFListener = new BruteForceListener(fileChooser, bruteForce, southPanel, textField);
+        bFListener.setStyledDoc(doc);
+        bFListener.setAttrSet(normal);
+        bFListener.setjFrameText(jFrameText);
+        bFListener.setDisableButton1(encrypt);
+        bFListener.setDisableButton2(decrypt);
+        bruteForce.addActionListener(bFListener);
 
-            }
-        });
-
-        bruteForce.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    doc.remove(0, doc.getLength());
-                } catch (BadLocationException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int result = fileChooser.showOpenDialog(bruteForce);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    path = selectedFile.toPath();
-                }
-
-                southPanel.setVisible(false);
-
-                textField.setText("");
-
-
-                String text = getBruteForcedText(path);
-
-                jFrameText.setVisible(true);
-                try {
-                    doc.insertString(doc.getLength(), text, normal);
-                } catch (BadLocationException evt) {
-                    throw new RuntimeException(evt);
-                }
-
-
-
-                encrypt.setSelected(false);
-                decrypt.setSelected(false);
-            }
-        });
-
-
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ((AbstractButton) event.getSource()).setEnabled(false); //feature for blocking OKAY
-
-                try {
-                    doc.remove(0, doc.getLength());
-                } catch (BadLocationException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                int key = 0;
-                if (textField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(frame.getComponent(0), "Please enter key!");
-                }
-                else {
-                    key = Integer.parseInt(textField.getText());
-//                    try {
-//
-//                    } catch (StringIndexOutOfBoundsException e) {
-//                        JOptionPane.showMessageDialog(frame.getComponent(0), "Введите действительный ключ от 0 до 41 (НЕВКЛЮЧИТЕЛЬНО) !");
-//                        textField.setText("");
-//                    }
-                }
-
-
-                String text = null;
-                if (encrypt.isSelected()) {
-
-                    try {
-                        text = Main.readFileAndEncrypt(path, key);
-                    } catch (StringIndexOutOfBoundsException e) {
-                        JOptionPane.showMessageDialog(frame.getComponent(0), "Введите действительный ключ от 0 до 41 (НЕВКЛЮЧИТЕЛЬНО) !");
-                        textField.setText("");
-                    }
-                }
-                if (decrypt.isSelected()) {
-                    text = Main.readFileAndDecrypt(path, key);
-                }
-
-
-                if (text != null) {
-                    jFrameText.setVisible(true);
-                }
-                try {
-                    doc.insertString(doc.getLength(), text, normal);
-                } catch (BadLocationException e) {
-                    throw new RuntimeException(e);
-                }
-
-                reset.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ((AbstractButton) event.getSource()).setEnabled(true); // feature for unblocking OKAY button
-
-                        textField.setText("");
-                    }
-                });
-            }
-        });
+        OkayListener okayListener = new OkayListener(doc, normal, frame, jFrameText);
+        okayListener.setReset(reset);
+        okayListener.setTextField(textField);
+        okayListener.setEncryptButton(encrypt);
+        okayListener.setDecryptButton(decrypt);
+        ok.addActionListener(okayListener);
 
 
         //Adding Components to the frame.
@@ -236,5 +128,4 @@ class Gui {
 
         frame.setVisible(true);
     }
-
 }
