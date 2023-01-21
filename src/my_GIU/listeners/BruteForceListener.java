@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import static brute_force.BruteForcedText.getBruteForcedText;
 
 public class BruteForceListener implements ActionListener {
-    JFileChooser fileChooser;
+//    JFileChooser fileChooser;
     JButton bruteForce;
     JPanel panel;
     JTextField textField;
@@ -23,8 +23,8 @@ public class BruteForceListener implements ActionListener {
     private JFrame jFrameText;
 
 
-    public BruteForceListener(JFileChooser fileChooser, JButton bruteForce, JPanel panel, JTextField textField) {
-        this.fileChooser = fileChooser;
+    public BruteForceListener(JButton bruteForce, JPanel panel, JTextField textField) {
+//        this.fileChooser = fileChooser;
         this.bruteForce = bruteForce;
         this.panel = panel;
         this.textField = textField;
@@ -38,10 +38,12 @@ public class BruteForceListener implements ActionListener {
         jFramePrinter.clearText();
 
         Path path = null;
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        int result = fileChooser.showOpenDialog(bruteForce);
+
+        JFileChooser newFileChooser = new JFileChooser();
+        newFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int result = newFileChooser.showOpenDialog(bruteForce);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
+            File selectedFile = newFileChooser.getSelectedFile();
             path = selectedFile.toPath();
         }
         panel.setVisible(false);
@@ -54,7 +56,13 @@ public class BruteForceListener implements ActionListener {
             JOptionPane.showMessageDialog(null, "Operation canceled.");
         }
 
-        jFramePrinter.printText(text);
+        if (text != null) {
+            jFramePrinter.printText(text);
+        } else if (path != null){
+            JOptionPane.showMessageDialog(null, "Результат выведения null, повторите с непустым файлом!");
+        }
+
+
 
         ButtonSwitcher.disableAllButtons(disableButton1, disableButton2);
     }

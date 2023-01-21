@@ -1,6 +1,7 @@
 package my_GIU.listeners;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,6 +29,9 @@ public class EncryptDecryptListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JFileChooser newFileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Only text files", "txt", "text");
+        newFileChooser.setFileFilter(filter);
+
         newFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = newFileChooser.showOpenDialog(targetButton);
         if (result == JFileChooser.APPROVE_OPTION) {
