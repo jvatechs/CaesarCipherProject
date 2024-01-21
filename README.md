@@ -1,4 +1,4 @@
-# CaesarCipher3.0
+# CaesarCipher
 Decrypt, encrypt and bruteforce texts written with slavic/cyrillic letters with GUI.
 
 ![screenshot](src/resources/screenshot.png)
