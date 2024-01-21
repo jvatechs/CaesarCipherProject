@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 
+import static brute_force.BruteForcedText.getBruteForcedText;
+
 public class EncryptDecryptListener implements ActionListener {
     static Path path;
     private  JButton targetButton;
@@ -21,9 +23,6 @@ public class EncryptDecryptListener implements ActionListener {
     }
 
 
-    //    public Path getPath() {
-//        return path;
-//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -32,11 +31,14 @@ public class EncryptDecryptListener implements ActionListener {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Only text files", "txt", "text");
         newFileChooser.setFileFilter(filter);
 
-        newFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        newFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/resources"));
         int result = newFileChooser.showOpenDialog(targetButton);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = newFileChooser.getSelectedFile();
             path = selectedFile.toPath();
+        }
+        if (result == JFileChooser.CANCEL_OPTION) {
+                JOptionPane.showMessageDialog(null, "Operation canceled.");
         }
 
         panel.setVisible(true);

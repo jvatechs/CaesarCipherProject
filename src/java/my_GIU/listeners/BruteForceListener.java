@@ -40,7 +40,7 @@ public class BruteForceListener implements ActionListener {
         Path path = null;
 
         JFileChooser newFileChooser = new JFileChooser();
-        newFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        newFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/src/resources"));
         int result = newFileChooser.showOpenDialog(bruteForce);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = newFileChooser.getSelectedFile();
