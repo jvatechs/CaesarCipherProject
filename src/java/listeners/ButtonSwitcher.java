@@ -1,4 +1,4 @@
-package my_GIU.listeners;
+package listeners;
 
 import javax.swing.*;
 

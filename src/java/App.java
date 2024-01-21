@@ -1,8 +1,6 @@
-package my_GIU;
-
-import my_GIU.listeners.BruteForceListener;
-import my_GIU.listeners.EncryptDecryptListener;
-import my_GIU.listeners.OkayListener;
+import listeners.BruteForceListener;
+import listeners.EncryptDecryptListener;
+import listeners.OkayListener;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -13,7 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-class Gui {
+class App {
     public static void main(String[] args) {
 
         //create main frame

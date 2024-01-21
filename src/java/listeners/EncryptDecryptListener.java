@@ -1,4 +1,4 @@
-package my_GIU.listeners;
+package listeners;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
-
-import static brute_force.BruteForcedText.getBruteForcedText;
 
 public class EncryptDecryptListener implements ActionListener {
     static Path path;
