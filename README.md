@@ -1,5 +1,5 @@
 # CaesarCipher
-Decrypt, encrypt and bruteforce texts written with slavic/cyrillic letters with GUI.
+Decrypt, encrypt and bruteforce texts written with slavic/cyrillic letters with with Java Swing frontend.
 
 ![screenshot](src/resources/screenshot.png)
 
